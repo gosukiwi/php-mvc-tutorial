@@ -44,6 +44,9 @@ if(!file_exists($ctrl_file)) {
     throw new Exception("Controller $controller was not found.");
 }
 
+// require composer autoloader
+require(__DIR__ . '/vendor/autoload.php');
+
 // If the controller does exist, include it and call the action/function
 require($ctrl_file);
 $ctrl = new $controller;
