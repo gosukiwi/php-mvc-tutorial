@@ -29,7 +29,7 @@ class MainController extends Controller
 
         // let's now retrieve all posts
         $posts = Post::find('all');
-        $this->view('Main/index.html.php', array(
+        $this->view('Main/index.katar.php', array(
             'posts' => $posts,
         ));
     }

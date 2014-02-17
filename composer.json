@@ -1,5 +1,6 @@
 {
   "require": {
-    "php-activerecord/php-activerecord": "dev-master"
+    "php-activerecord/php-activerecord": "dev-master",
+    "gosukiwi/katar": "dev-master"
   }
 }
