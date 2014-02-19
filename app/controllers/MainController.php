@@ -1,5 +1,7 @@
 <?php
-require(__DIR__ . '/Controller.php');
+namespace App\Controllers;
+
+use App\Models\Post;
 
 class MainController extends Controller
 {

@@ -1,6 +1,7 @@
 {
   "require": {
     "php-activerecord/php-activerecord": "dev-master",
-    "gosukiwi/katar": "dev-master"
+    "gosukiwi/katar": "dev-master",
+    "joomla/di": "~1.0"
   }
 }

@@ -1,29 +1,21 @@
 <?php
+namespace App\Controllers;
+
 class Controller
 {
-    private $katar;
+    private $container;
 
-    public function __construct() {
-        // configure model
-        ActiveRecord\Config::initialize(function($cfg)
-        {
-            // activerecord will autoload all classes inside this folder
-            $cfg->set_model_directory(__DIR__ . '/../models');
-            // let's use a mysql datbase, in this case the username and
-            // password are both root, and the database is php-mvc
-            $cfg->set_connections(array(
-                'development' => 'mysql://root:root@localhost/php-mvc'
-            ));
-        });
+    public function __construct($container) {
+        $this->container = $container;
+    }
 
-        // configure views
-        // load Katar and set the cache folder to ./app/cache
-        $this->katar = new \Katar\Katar(__DIR__ . '/../cache');
+    protected function get($name) {
+        return $this->container->get($name);
     }
 
     protected function view($file, $params = array()) {
         // katar will compile $file and render the compiled file by
         // including it
-        $this->katar->render(__DIR__ . '/../views/' . $file, $params);
+        $this->get('katar')->render(__DIR__ . '/../views/' . $file, $params);
     }
 }

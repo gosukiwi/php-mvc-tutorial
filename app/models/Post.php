@@ -1,5 +1,7 @@
 <?php
-class Post extends ActiveRecord\Model
+namespace App\Models;
+
+class Post extends \ActiveRecord\Model
 {
     // Validate the size of...
     static $validates_size_of = array(

@@ -1,5 +1,17 @@
 <?php
 
+// require composer autoloader
+require(__DIR__ . '/autoload.php');
+
+// load the dependency injection container
+$container = require(__DIR__ . '/app/config/services.php');
+
+// Configure AR
+ActiveRecord\Config::initialize(function($ar) use ($container) {
+    $config = $container->get('config');
+    $ar->set_connections($config['databases']);
+});
+
 // This is our framework setup
 // The first thing we want to do is load the appropiate controller and call
 // the required function.
@@ -27,28 +39,13 @@ $route = substr($uri, strpos($uri, 'index.php/') + strlen('index.php/'));
 // Let's split the string using '/' as a delimiter, the first result is the
 // controller, the second is the action
 $params = explode('/', $route);
+
 // If no controller is specified, use 'MainController'
-$controller = $params[0] ? $params[0] : 'Main';
+$controller = 'App\\Controllers\\' . ($params[0] ? $params[0] : 'Main') . 'Controller';
+
 // If no action is specified, use 'index'
 $action = count($params) > 1 ? $params[1] : 'index';
 
-// Now call the according controller
-// First, append 'Controller' to the controller name, so we end up with names
-// such as 'MainController', 'UsersController', etc.
-$controller .= 'Controller';
-// This is the path to the controller file
-$ctrl_file = __DIR__ . '/app/controllers/' . $controller . '.php';
-
-// If the controller does not exist, throw an exception
-if(!file_exists($ctrl_file)) {
-    throw new Exception("Controller $controller was not found.");
-}
-
-// require composer autoloader
-require(__DIR__ . '/vendor/autoload.php');
-
-// If the controller does exist, include it and call the action/function
-require($ctrl_file);
-$ctrl = new $controller;
+$ctrl = new $controller($container);
 $ctrl->$action();
 
